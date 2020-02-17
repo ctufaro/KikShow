@@ -22,16 +22,12 @@
           ma-0
         >
           <v-flex xs12>
-            <v-chip
-              label
-              class="mx-0 mb-2 text-uppercase"
-              color="grey darken-3"
-              text-color="white"
-              small
-              @click.stop=""
-            >
-              {{ value.category }}
-            </v-chip>
+            <v-avatar>
+      <img
+        :src=value.avatar
+        alt="John"
+      >
+    </v-avatar>
             <h3 class="title font-weight-bold mb-2">
               {{ value.title }}
             </h3>
@@ -48,7 +44,7 @@
               small
               @click.stop=""
             >
-              Read More
+              For Sale
             </v-btn>
           </v-flex>
         </v-layout>

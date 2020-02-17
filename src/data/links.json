@@ -1,15 +1,17 @@
 [
     {
       "title": "Nike High Tops",
-      "author": "Chris T",
+      "author": "@christufaro",
       "category": "Gallery",
-      "hero": "nike.jpg"
+      "hero": "nike.jpg",
+      "avatar": "https://avatars1.githubusercontent.com/u/3218846?s=400&v=4"
     },
     {
       "title": "Air Jordan 1",
-      "author": "Steve S",
+      "author": "@Stitter46",
       "category": "Gallery",
-      "hero": "nike2.jpg"
+      "hero": "nike2.jpg",
+      "avatar": "https://pbs.twimg.com/profile_images/515538698579247105/CFGoRyT5_400x400.jpeg"
     }    
 ]
   
