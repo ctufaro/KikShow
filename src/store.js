@@ -7,6 +7,9 @@ export default new Vuex.Store({
   state: {
     articles: require('@/data/links.json'),
     drawer: false,
+    userloggedin: false,
+    username: '',
+    useravatarsrc: 'https://www.gravatar.com/avatar?d=mp',
     items: [
       {
         text: 'Home',
@@ -44,6 +47,9 @@ export default new Vuex.Store({
   },
   mutations: {
     setDrawer: (state, payload) => (state.drawer = payload),
+    setUserLoggedIn: (state, payload) => (state.userloggedin = payload),
+    setUserName: (state, payload) => (state.username = payload),
+    setUserAvatarSrc: (state, payload) => (state.useravatarsrc = payload),
     toggleDrawer: state => (state.drawer = !state.drawer)
   },
   actions: {

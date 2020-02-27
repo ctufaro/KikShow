@@ -32,6 +32,9 @@
           {{ link.text }}
         </v-btn>
         <v-spacer />
+        <v-avatar size="50" class="mr-3 hidden-lg-and-up hidden-sm-and-down">
+            <img :src=this.$store.state.useravatarsrc>
+        </v-avatar>
         <v-text-field
           append-icon="mdi-magnify"
           flat
