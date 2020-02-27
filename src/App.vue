@@ -1,15 +1,19 @@
 <template>
-  <v-app>
-    <core-toolbar />
+    <v-app>
+        <core-toolbar />
 
-    <core-drawer />
+        <core-drawer />
 
-    <core-view />
+        <core-view />
 
-    <core-footer />
+        <core-footer />
 
-    <core-cta />
-  </v-app>
+        <core-cta />
+
+        <div class="mt-10"></div>
+
+        <core-bottom/>
+    </v-app>
 </template>
 
 <script>
@@ -21,7 +25,8 @@
       CoreDrawer: () => import('@/components/core/Drawer'),
       CoreFooter: () => import('@/components/core/Footer'),
       CoreToolbar: () => import('@/components/core/Toolbar'),
-      CoreView: () => import('@/components/core/View')
+      CoreView: () => import('@/components/core/View'),
+      CoreBottom: () => import('@/components/core/BottomMenu')
     },
     data () {
       return {

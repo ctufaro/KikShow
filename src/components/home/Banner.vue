@@ -15,6 +15,7 @@
                     </v-btn>
                     -->
                     <v-facebook-login :app-id="this.appId" style="border-radius:28px;" @logout="logout" @login="login"></v-facebook-login>
+                    
                 </v-flex>
             </v-layout>
         </v-img>

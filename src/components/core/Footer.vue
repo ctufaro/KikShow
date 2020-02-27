@@ -1,5 +1,5 @@
 <template>
-  <v-footer
+  <v-footer v-if="false"
     class="py-4"
     dark
   >

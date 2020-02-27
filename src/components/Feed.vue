@@ -96,5 +96,6 @@
 .ftr-text{
   text-align: center;
   font-size: smaller;
+  margin-bottom:10px;
 }
 </style>
