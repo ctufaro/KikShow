@@ -7,11 +7,25 @@
             <div class="user-name">{{this.$store.state.username}}</div>
         </div>
         <v-list>
+            <!--
             <v-list-item v-for="(link, i) in links" :key="i" :to="link.to" :href="link.href" @click="onClick($event, link)">
                 <v-list-item-content>
                     <v-list-item-title>{{ link.text }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
+            -->
+            <v-list-item to="/" >
+                <v-list-item-content>
+                    <v-list-item-title>Home</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item to="/Log" >
+                <v-list-item-content>
+                    <v-list-item-title>Log</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
         </v-list>
     </v-navigation-drawer>
 </template>

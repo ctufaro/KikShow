@@ -11,6 +11,7 @@ export default new Vuex.Store({
     userloggedin: false,
     username: '',
     useravatarsrc: 'https://www.gravatar.com/avatar?d=mp',
+    messages: [],
     items: [
       {
         text: 'Home',
@@ -52,6 +53,7 @@ export default new Vuex.Store({
     setUserLoggedIn: (state, payload) => (state.userloggedin = payload),
     setUserName: (state, payload) => (state.username = payload),
     setUserAvatarSrc: (state, payload) => (state.useravatarsrc = payload),
+    insertMessage: (state, payload) => (state.messages.push({text:payload})),
     toggleDrawer: state => (state.drawer = !state.drawer)
   },
   actions: {
