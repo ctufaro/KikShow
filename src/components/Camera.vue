@@ -41,7 +41,7 @@ export default {
             var self = this;
             navigator.mediaDevices.getUserMedia(constraints)
                 .then(function (mediaStream) {
-                    var video = document.querySelector('camera');
+                    var video = document.querySelector("#camera");
                     video.srcObject = mediaStream;
                     video.onloadedmetadata = function () {
                         video.play();
