@@ -74,21 +74,39 @@ export default {
         snap(){
             const video = window.video = document.querySelector('video');
             const canvas = window.canvas = document.querySelector('canvas');
-            canvas.width = 50;
-            canvas.height = 50;
+            canvas.width = 600;
+            canvas.height = 667;
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             this.count++;
-            //this.upload();
+            this.upload();
         },
         upload(){
+            /*this.axios.post('https://localhost:44302/api/ImageUpload', {
+                id:3
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });*/
             var self = this;
             const canvas = document.querySelector('canvas');
             canvas.toBlob(function(blob) {
                 const formData = new FormData();
-                formData.append('my-file', blob, 'filename.png');
+                formData.append('body', blob, 'filename.png');
                 // Post via axios or other transport method
-                self.axios.post('https://localhost:44302/api/ImageUpload', formData);
+                //self.axios.post('https://localhost:44302/api/ImageUpload', formData);
+                self.axios({
+                    method: 'post',
+                    url: "https://kikshowapi.azurewebsites.net/api/ImageUpload",
+                    data: formData, 
+                    headers: {
+                        'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+                    }
+                });
             });
+
         }
     },
     mounted() {
@@ -98,5 +116,8 @@ export default {
 </script>
 
 <style>
-
+#cvas{
+    height:50px;
+    width:50px;
+}
 </style>
