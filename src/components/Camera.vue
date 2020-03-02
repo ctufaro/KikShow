@@ -10,7 +10,7 @@
             <v-bottom-navigation app background-color="black">
                 <v-btn icon x-large @click.prevent="">
                     <v-badge color="pink" :content="this.count" v-show="this.count>0">
-                        <canvas></canvas>
+                        <canvas id="cvas"></canvas>
                     </v-badge>
                 </v-btn>
                 <v-spacer />
