@@ -74,8 +74,8 @@ export default {
         snap(){
             const video = window.video = document.querySelector('video');
             const canvas = window.canvas = document.querySelector('canvas');
-            canvas.width = 600;
-            canvas.height = 667;
+            canvas.width = this.naturalWidth;//600;
+            canvas.height = this.naturalheight;//667;
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             this.count++;
             this.upload();
@@ -104,7 +104,7 @@ export default {
                     headers: {
                         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
                     }
-                });
+                });//should return the filename that was saved on azure, save filename in array
             });
 
         }
