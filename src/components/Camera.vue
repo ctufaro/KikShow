@@ -14,16 +14,28 @@
                     </v-badge>
                 </v-btn>
                 <v-spacer />
-                <v-btn icon x-large @click.prevent="snap()">
+                <v-btn v-if="!saving" icon x-large @click.prevent="snap()">
                     <v-icon color="white">fa fa-camera</v-icon>
                 </v-btn>
+                <v-btn v-if="saving">
+                    <v-progress-circular indeterminate color="white" ></v-progress-circular>
+                </v-btn>
                 <v-spacer />
-                <v-btn icon x-large @click.prevent="">
+                <v-btn icon x-large @click.prevent="makeSpin" :disabled="count<1">
                     <v-icon color="white">far fa-check-square</v-icon>
                 </v-btn>
             </v-bottom-navigation>
         </v-card>
+        <v-dialog v-model="showgenmsg" hide-overlay persistent width="300">
+            <v-card color="primary" dark>
+                <v-card-text class="pt-3">
+                    Generating 360 Model
+                    <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-dialog>
+    
 </template>
 
 <script>
@@ -34,7 +46,10 @@ import {
 export default {
     data: () => ({
         dialog: false,
-        count:0
+        saving:false,
+        count:0,
+        savedShots:[],
+        showgenmsg:false
     }),
     methods: {
         ...mapMutations(['insertMessage']),
@@ -44,7 +59,7 @@ export default {
             // Prefer camera resolution nearest to 1280x720.
             var constraints = {
                 //video: { facingMode: { exact: "environment" } }, //iphone
-                video:true, //laptop            
+                video: (window.location.href.includes('kikshow.')) ? { facingMode: { exact: "environment" } } : true, //laptop            
                 audio:false
             };
             this.insertMessage('navigator.mediaDevices.getUserMedia');
@@ -66,47 +81,64 @@ export default {
         closeCamera() {
             this.dialog = false;
             this.insertMessage('closing camera');
+            this.clear();
+        },
+        clear(){
             const canvas = window.canvas = document.querySelector('canvas');
             var context = canvas.getContext('2d');
             context.clearRect(0,0, canvas.width, canvas.height);
             this.count = 0;
+            this.savedShots = [];
         },
         snap(){
+            this.saving = true;
             const video = window.video = document.querySelector('video');
             const canvas = window.canvas = document.querySelector('canvas');
-            canvas.width = this.naturalWidth;//600;
-            canvas.height = this.naturalheight;//667;
+            canvas.width = 600;
+            canvas.height = 667;
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             this.count++;
             this.upload();
         },
         upload(){
-            /*this.axios.post('https://localhost:44302/api/ImageUpload', {
-                id:3
-            })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });*/
             var self = this;
             const canvas = document.querySelector('canvas');
             canvas.toBlob(function(blob) {
                 const formData = new FormData();
-                formData.append('body', blob, 'filename.png');
+                formData.append('body', blob, 'clientside.jpg');
                 // Post via axios or other transport method
                 //self.axios.post('https://localhost:44302/api/ImageUpload', formData);
                 self.axios({
                     method: 'post',
                     url: "https://kikshowapi.azurewebsites.net/api/ImageUpload",
+                    //url: "https://192.168.1.45:45455/api/ImageUpload",
                     data: formData, 
                     headers: {
                         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
                     }
-                });//should return the filename that was saved on azure, save filename in array
+                })
+                .then(response=>{
+                    let savedFile = response.data;
+                    self.savedShots.push({'filename':savedFile});
+                    self.saving = false;                    
+                });
             });
 
+        },
+        makeSpin() {
+            var self = this;
+            this.showgenmsg = true;
+            self.axios({
+                method: 'post',
+                url: "https://kikshowapi.azurewebsites.net/api/GifGenerate",
+                //url: "https://192.168.1.45:45455/api/GifGenerate",
+                data: this.savedShots
+            })
+            .then(() => { 
+                //close generating message
+                self.showgenmsg = false;
+                self.clear();
+            });
         }
     },
     mounted() {
