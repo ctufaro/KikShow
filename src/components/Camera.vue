@@ -1,4 +1,5 @@
 <template>
+<span>
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-card>
             <v-app-bar flat color="black" app>
@@ -34,8 +35,9 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
-    </v-dialog>
-    
+    </v-dialog> 
+    <ShowCase ref="ShowCase"></ShowCase>
+</span>   
 </template>
 
 <script>
@@ -43,7 +45,13 @@ import {
     mapMutations
 } from 'vuex'
 
+
+
 export default {
+    name:'Camera',
+    components: {
+      ShowCase: () => import('@/components/ShowCase')
+    },
     data: () => ({
         dialog: false,
         saving:false,
@@ -125,7 +133,7 @@ export default {
             });
 
         },
-        makeSpin() {
+        makeSpin() {             
             var self = this;
             this.showgenmsg = true;
             self.axios({
@@ -134,9 +142,10 @@ export default {
                 //url: "https://192.168.1.45:45455/api/GifGenerate",
                 data: this.savedShots
             })
-            .then(() => { 
-                //close generating message
+            .then((response) => {                
                 self.showgenmsg = false;
+                self.savedShots.push({'filename':response.data});                
+                self.$refs.ShowCase.openShowCase(response.data, self.savedShots); 
                 self.clear();
             });
         }
