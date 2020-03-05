@@ -1,5 +1,9 @@
 <template>
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <v-app-bar flat color="black" app>
+            <v-spacer></v-spacer>
+            <div class="dir">Kik Show</div>
+        </v-app-bar>
         <v-img :src="anigif" @load="imageloaded"></v-img>
         <v-dialog v-model="loadingmsg" hide-overlay persistent width="300">
             <v-card color="primary" dark>
@@ -24,28 +28,27 @@
 <script>
 export default {
     data: () => ({
-        dialog: false,
-        url:'https://kikimageblobs.blob.core.windows.net/imagecontainer/',
+        dialog: false,        
         anigif:'',
         loadingmsg:true,
         azurefiles:[]
     }),
     methods:{
         openShowCase(file,snapshots){
-            this.anigif = this.url + file;
+            this.anigif = this.$blob + file;
             this.dialog = true;
             this.azurefiles = snapshots;
         },
         imageloaded(){
             this.loadingmsg = false;
+            console.log('loaded');
         },
         trash(){
             this.dialog=!this.dialog
             console.log(this.azurefiles);
             this.axios({
                 method: 'delete',
-                url: "https://kikshowapi.azurewebsites.net/api/GifGenerate",
-                //url: "https://192.168.1.45:45455/api/GifGenerate",
+                url: `${this.$hostname}/GifGenerate`,
                 data: this.azurefiles
             })
             .then(() => {
@@ -56,6 +59,6 @@ export default {
 </script>
 <style>
 .v-dialog--fullscreen {
-    background-color: white;
+    background-color: black;
 }
 </style>

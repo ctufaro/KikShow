@@ -5,7 +5,15 @@
                 <v-btn icon x-large color="white" @click="closeCamera()">
                     <v-icon>far fa-times-circle</v-icon>
                 </v-btn>
+                <v-spacer></v-spacer>
+                <div class="dir">Kik Show</div>
+                <!--<v-btn icon x-large color="white" @click="test()">
+                    <v-icon>far fa-star</v-icon>
+                </v-btn>-->
             </v-app-bar>
+            <v-overlay :opacity="0" :z-index="1" :value="this.count>0">
+                <div class="flash" v-bind:style="{ opacity: opacity }">{{count}}</div>
+            </v-overlay>
             <video id="gum-local" autoplay playsinline></video>
             <v-bottom-navigation app background-color="black">
                 <v-btn icon x-large @click.prevent="">
@@ -55,7 +63,8 @@ export default {
         saving:false,
         count:0,
         savedShots:[],
-        showgenmsg:false
+        showgenmsg:false,
+        opacity:.2
     }),
     methods: {
         ...mapMutations(['insertMessage']),
@@ -112,12 +121,9 @@ export default {
             canvas.toBlob(function(blob) {
                 const formData = new FormData();
                 formData.append('body', blob, 'clientside.jpg');
-                // Post via axios or other transport method
-                //self.axios.post('https://localhost:44302/api/ImageUpload', formData);
                 self.axios({
                     method: 'post',
-                    url: "https://kikshowapi.azurewebsites.net/api/ImageUpload",
-                    //url: "https://192.168.1.45:45455/api/ImageUpload",
+                    url: `${self.$hostname}/ImageUpload`,
                     data: formData, 
                     headers: {
                         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
@@ -136,8 +142,7 @@ export default {
             this.showgenmsg = true;
             self.axios({
                 method: 'post',
-                url: "https://kikshowapi.azurewebsites.net/api/GifGenerate",
-                //url: "https://192.168.1.45:45455/api/GifGenerate",
+                url: `${self.$hostname}/GifGenerate`,
                 data: this.savedShots
             })
             .then((response) => {                
@@ -146,6 +151,10 @@ export default {
                 self.$refs.ShowCase.openShowCase(response.data, self.savedShots); 
                 self.clear();
             });
+        },
+        test(){
+            //this.count++;
+            //this.opacity=.3;
         }
     },
     mounted() {
@@ -159,6 +168,17 @@ export default {
     height: 50px;
 }
 .v-dialog--fullscreen {
-    background-color: white;
+    background-color: black;
 }
+.flash {
+    color:white;
+    font-size: 80vw;
+}
+.dir{
+    color:white;
+    font-size: 5vw;
+    font-family: 'Pacifico', cursive;
+}
+
+
 </style>

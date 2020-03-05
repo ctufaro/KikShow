@@ -11,6 +11,10 @@ import 'regenerator-runtime'
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 
+//Vue.prototype.$hostname = 'https://192.168.1.45:45455/api'
+Vue.prototype.$hostname = 'https://kikshowapi.azurewebsites.net/api'
+Vue.prototype.$blob = 'https://kikimageblobs.blob.core.windows.net/imagecontainer/'
+
 new Vue({
   router,
   store,
