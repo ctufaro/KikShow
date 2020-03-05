@@ -1,7 +1,6 @@
 <template>
-<span>
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-        <v-card>
+    <span>
+        <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-app-bar flat color="black" app>
                 <v-btn icon x-large color="white" @click="closeCamera()">
                     <v-icon>far fa-times-circle</v-icon>
@@ -19,25 +18,24 @@
                     <v-icon color="white">fa fa-camera</v-icon>
                 </v-btn>
                 <v-btn v-if="saving">
-                    <v-progress-circular indeterminate color="white" ></v-progress-circular>
+                    <v-progress-circular indeterminate color="white"></v-progress-circular>
                 </v-btn>
                 <v-spacer />
                 <v-btn icon x-large @click.prevent="makeSpin" :disabled="count<1">
                     <v-icon color="white">far fa-check-square</v-icon>
                 </v-btn>
             </v-bottom-navigation>
-        </v-card>
-        <v-dialog v-model="showgenmsg" hide-overlay persistent width="300">
-            <v-card color="primary" dark>
-                <v-card-text class="pt-3">
-                    Generating 360 Model
-                    <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
-                </v-card-text>
-            </v-card>
+            <v-dialog v-model="showgenmsg" hide-overlay persistent width="300">
+                <v-card color="primary" dark>
+                    <v-card-text class="pt-3">
+                        Generating 360 Model
+                        <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
         </v-dialog>
-    </v-dialog> 
-    <ShowCase ref="ShowCase"></ShowCase>
-</span>   
+        <ShowCase ref="ShowCase"></ShowCase>
+    </span>
 </template>
 
 <script>
@@ -102,8 +100,8 @@ export default {
             this.saving = true;
             const video = window.video = document.querySelector('video');
             const canvas = window.canvas = document.querySelector('canvas');
-            canvas.width = 600;
-            canvas.height = 667;
+            canvas.width = window.stream.getVideoTracks()[0].getSettings().width;
+            canvas.height = window.stream.getVideoTracks()[0].getSettings().height;
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             this.count++;
             this.upload();
@@ -157,8 +155,10 @@ export default {
 </script>
 
 <style>
-#cvas{
-    height:50px;
-    width:50px;
+#cvas {
+    height: 50px;
+}
+.v-dialog--fullscreen {
+    background-color: white;
 }
 </style>

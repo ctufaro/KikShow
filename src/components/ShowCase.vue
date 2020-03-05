@@ -47,8 +47,8 @@ export default {
             console.log(this.azurefiles);
             this.axios({
                 method: 'delete',
-                //url: "https://kikshowapi.azurewebsites.net/api/GifGenerate",
-                url: "https://192.168.1.45:45455/api/GifGenerate",
+                url: "https://kikshowapi.azurewebsites.net/api/GifGenerate",
+                //url: "https://192.168.1.45:45455/api/GifGenerate",
                 data: this.azurefiles
             })
             .then(() => {
