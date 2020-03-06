@@ -123,7 +123,7 @@ export default {
                 formData.append('body', blob, 'clientside.jpg');
                 self.axios({
                     method: 'post',
-                    url: `${self.$hostname}/ImageUpload`,
+                    url: `${self.$hostname}/Storage`,
                     data: formData, 
                     headers: {
                         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
