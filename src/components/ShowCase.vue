@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-        <v-app-bar flat color="black" app>
+        <v-app-bar flat color="transparent" app>
             <v-spacer></v-spacer>
             <div class="dir">Kik Show</div>
         </v-app-bar>

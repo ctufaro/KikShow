@@ -1,7 +1,7 @@
 <template>
     <span>
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-            <v-app-bar flat color="black" app>
+            <v-app-bar flat color="transparent" app>
                 <v-btn icon x-large color="white" @click="closeCamera()">
                     <v-icon>far fa-times-circle</v-icon>
                 </v-btn>
